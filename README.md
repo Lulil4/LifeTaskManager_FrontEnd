@@ -4,6 +4,7 @@
 <hr>
 <h2>Requirements</h2>
 <p>➤ To run this project properly please use:</p>
-<p>• NestJs 8.0.0</p>
-<p>• Node 14.17.6</p>
+<p>• React 17.0.2</p>
+<p>• Bulma 0.9.3</p>
+<p>• React Router Dom 5.3.0</p>
 <hr>
