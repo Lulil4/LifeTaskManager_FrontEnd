@@ -6,48 +6,85 @@ import '../App.css'
 
 const Crud = () => {
    // const URL = "http://localhost:5000/";
-    const [items, setItems] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [toEdit, setToEdit] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const columnNames = ["id", "description", "finished"];
+    const URL = "http://localhost:3000/tasks";
 
     useEffect(() => {
-        setItems(    [
-            {
-                "id":1,
-                "description":"Buy groceries",
-                "finished":true
-            },
-            {
-                "id":2,
-                "description":"Prepare weekly report",
-                "finished":false
-            },
-            {
-                "id":3,
-                "description":"Write to candidates",
-                "finished":true
+
+        const getTasks = async (url) => {
+            try {
+                const res = await fetch(url, {
+                   /* headers: {
+                        "authorization": JSON.stringify(token)
+                    }*/
+                });
+                const data = await res.json();
+                data.forEach((task) => {
+                    setTasks((tasks) => {
+                        return [...tasks, task];
+                    });
+                });
+                setIsLoading(false);
+            } catch (error) {
+                console.error(error.message);
             }
-        ]);
+        }
+        getTasks(URL);
     }, [])
     
 
     const createTask = (newTask)=>{
-        alert("CREATE");
-        console.log(newTask);
+        delete newTask.id;
+        fetch(URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+              //  "authorization": JSON.stringify(token)
+            },
+            body: JSON.stringify(newTask)
+        }).then(res => res.json())
+        .then(newTask => setTasks([...tasks, newTask]));
 
     };
 
-    const updateTask = (taskUpdated)=>{
-        alert("EDIT");
+    const updateTask = (taskUpdated) => {
+        fetch(URL + taskUpdated.id, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                //"authorization": JSON.stringify(token)
+            },
+            body: JSON.stringify(taskUpdated)
+        }).then((res) => {
+            return res.json();
+        })
+            .then((taskEdited) => {
+                setTasks((tasks) => {
+                    return tasks.map((task) => task.id === taskEdited.id ? taskEdited : task);
+                });
+            });
+        alert("EDITED! TEST MESSAGE");
         console.log(taskUpdated);
 
     };
 
     const deleteTask = (id)=>{
-        alert("REMOVE");
-        console.log(id);
- 
+        fetch(URL + "/" + id, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+               // "authorization": JSON.stringify(token)
+            },
+        }).then((res) => {
+            if (res.ok) {
+                setTasks(tasks => {
+                    return tasks.filter(task => task.id !== id);
+                });
+            }
+        })
     };
     
     return (
@@ -64,7 +101,7 @@ const Crud = () => {
                 (<Table 
                 title="To-Do List"
                 emptyMessage="Hurray! There are no tasks :)"
-                data={items}
+                data={tasks}
                 setToEdit={setToEdit}
                 deleteItem={deleteTask}
                 updateItem={updateTask}

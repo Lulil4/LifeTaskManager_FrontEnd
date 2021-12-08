@@ -2,13 +2,14 @@ import { React, useState, useEffect } from 'react'
 
 const initialForm = {
     id: null,
-    description: ""
+    description: "",
+    finished: false
 }
 
 const Form = ({ create, update, editedTask, setToEdit }) => {
     const [form, setForm] = useState(initialForm);
-    const { id, description} = form;
-    const [oldDescription, setOldDescription] = useState("test");
+    const {id, description, finished} = form;
+    const [oldDescription, setOldDescription] = useState("");
 
     useEffect(() => {
         if (editedTask) {
@@ -64,8 +65,8 @@ const Form = ({ create, update, editedTask, setToEdit }) => {
                     className="input is-warning"
                     />
                 <div className="centeredButtons spacedUpAndDown">
-                <input type="submit" className="leftButton button is-success" value="Enviar" />
-                <input type="reset" className="rightButton button is-warning" value="Limpiar" onClick={handleReset} />
+                <input type="submit" className="leftButton button is-success" value="Add" />
+                <input type="reset" className="rightButton button is-warning" value="Clear" onClick={handleReset} />
                 </div> 
             </form>
         </>
