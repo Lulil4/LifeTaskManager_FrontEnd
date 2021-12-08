@@ -3,6 +3,7 @@ import Table from './Table'
 import Loader from './Loader'
 import Form from './Form'
 import '../App.css'
+import Title from "./Title"
 
 const Crud = () => {
    // const URL = "http://localhost:5000/";
@@ -10,10 +11,11 @@ const Crud = () => {
     const [toEdit, setToEdit] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const columnNames = ["id", "description", "finished"];
+    const [error, setError] = useState(false);
     const URL = "http://localhost:3000/tasks";
 
     useEffect(() => {
-
+        setIsLoading(true);
         const getTasks = async (url) => {
             try {
                 const res = await fetch(url, {
@@ -29,85 +31,109 @@ const Crud = () => {
                 });
                 setIsLoading(false);
             } catch (error) {
-                console.error(error.message);
+               setError(true);
             }
         }
-        getTasks(URL);
-    }, [])
+        
+        setTimeout(() => {
+            getTasks(URL);
+        }, 600);
+    }, [URL])
     
 
     const createTask = (newTask)=>{
         delete newTask.id;
-        fetch(URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-              //  "authorization": JSON.stringify(token)
-            },
-            body: JSON.stringify(newTask)
-        }).then(res => res.json())
-        .then(newTask => setTasks([...tasks, newTask]));
+        setIsLoading(true);
+        try{
+            fetch(URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                  //  "authorization": JSON.stringify(token)
+                },
+                body: JSON.stringify(newTask)
+            }).then(res => res.json())
+            .then(newTask => setTasks([...tasks, newTask]));
+        }
+        catch(error){
+            setError(true);
+        }
+        setIsLoading(false);
 
     };
 
     const updateTask = (taskUpdated) => {
-        fetch(URL + taskUpdated.id, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                //"authorization": JSON.stringify(token)
-            },
-            body: JSON.stringify(taskUpdated)
-        }).then((res) => {
-            return res.json();
-        })
-            .then((taskEdited) => {
-                setTasks((tasks) => {
-                    return tasks.map((task) => task.id === taskEdited.id ? taskEdited : task);
+        setIsLoading(true);
+        try{
+            fetch(URL + "/" + taskUpdated.id, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    //"authorization": JSON.stringify(token)
+                },
+                body: JSON.stringify(taskUpdated)
+            }).then((res) => {
+                console.log(res);
+                return res.json();
+            })
+                .then((taskEdited) => {
+                    console.log(taskEdited);
+                    setTasks((tasks) => {
+                        return tasks.map((task) => task.id === taskEdited.id ? taskEdited : task);
+                    });
                 });
-            });
-        alert("EDITED! TEST MESSAGE");
-        console.log(taskUpdated);
-
+        }
+        catch(error){
+            setError(true);
+        }
+        setIsLoading(false);
     };
 
     const deleteTask = (id)=>{
-        fetch(URL + "/" + id, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-               // "authorization": JSON.stringify(token)
-            },
-        }).then((res) => {
-            if (res.ok) {
-                setTasks(tasks => {
-                    return tasks.filter(task => task.id !== id);
-                });
-            }
-        })
+        setIsLoading(true);
+        try {
+            fetch(URL + "/" + id, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                   // "authorization": JSON.stringify(token)
+                },
+            }).then((res) => {
+                if (res.ok) {
+                    setTasks(tasks => {
+                        return tasks.filter(task => task.id !== id);
+                    });
+                }
+            });
+        } catch (error) {
+            setError(true);
+        }
+        setIsLoading(false);
     };
     
     return (
         <>
-            <Form className="form"
-            create={createTask}
-            update={updateTask}
-            editedTask={toEdit}
-            setToEdit={setToEdit}
-            />
-           
             {
-                isLoading? (<Loader/>) : 
-                (<Table 
-                title="To-Do List"
-                emptyMessage="Hurray! There are no tasks :)"
-                data={tasks}
-                setToEdit={setToEdit}
-                deleteItem={deleteTask}
-                updateItem={updateTask}
-                columnNames={columnNames}/>)
+                error ? <Title title="Sorry! An error ocurred. Try again later." />
+                    : <Form className="form"
+                        create={createTask}
+                        update={updateTask}
+                        editedTask={toEdit}
+                        setToEdit={setToEdit}
+                    />
             }
-            
+            {
+                isLoading || error ? (<div className="centered"><Loader /></div>) :
+                    <Table
+                        title="To-Do List"
+                        emptyMessage="Hurray! There are no tasks :)"
+                        data={tasks}
+                        setToEdit={setToEdit}
+                        deleteItem={deleteTask}
+                        updateItem={updateTask}
+                        columnNames={columnNames} />
+            }
+
         </>
     )
 }

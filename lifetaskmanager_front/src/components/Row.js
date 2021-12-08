@@ -16,7 +16,7 @@ const Row = ({ item, setToEdit, deleteItem, updateItem }) => {
     return (
         <tr>
             <td><input type="checkbox" name="finished" onChange={handleChange} checked={isFinished} /></td>
-            <td>{description}</td>
+            <td><div className="preventLongDescription">{description}</div></td>
             <td>
                 <div className="centeredButtons">
                     <button className="leftButton button is-warning" onClick={() => { setToEdit(item) }}>Edit</button>

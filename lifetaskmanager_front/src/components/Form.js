@@ -34,9 +34,13 @@ const Form = ({ create, update, editedTask, setToEdit }) => {
             alert("Please, fill all fields.");
             return;
         }
+        else if(description.length > 99){
+            alert("Too long! Maybe you should atomize");
+            return;
+        }
+
         if (!id) {
             create(form);
-            alert("Sending...");
         }
         else {
             update(form);
@@ -65,7 +69,11 @@ const Form = ({ create, update, editedTask, setToEdit }) => {
                     className="input is-warning"
                     />
                 <div className="centeredButtons spacedUpAndDown">
-                <input type="submit" className="leftButton button is-success" value="Add" />
+                {
+                    id ? <input type="submit" className="leftButton button is-success" value="Edit" /> 
+                    : <input type="submit" className="leftButton button is-success" value="Add" />
+                }
+                
                 <input type="reset" className="rightButton button is-warning" value="Clear" onClick={handleReset} />
                 </div> 
             </form>
