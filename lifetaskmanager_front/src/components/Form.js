@@ -3,20 +3,30 @@ import { React, useState, useEffect } from 'react'
 const initialForm = {
     id: null,
     description: "",
-    finished: false
+    finished: false,
+    userId: null,
+    folderId:null
 }
 
-const Form = ({ create, update, editedTask, setToEdit }) => {
+const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderId}) => {
     const [form, setForm] = useState(initialForm);
-    const {id, description, finished} = form;
+    const {id, description, finished, userId, folderId} = form;
     const [oldDescription, setOldDescription] = useState("");
 
     useEffect(() => {
-        if (editedTask) {
-            setForm(editedTask);
-            setOldDescription(`"` + editedTask.description + `"`);
+        if (editedItem) {
+            setForm(editedItem);
+            setOldDescription(`"` + editedItem.description + `"`);
         }
-    }, [editedTask])
+        else{
+            setForm(() => {
+                return {
+                    ...form,
+                    folderId: selectedFolderId
+                }
+            });
+        }
+    }, [editedItem])
 
     const handleChange = ({ target }) => {
             setForm(() => {
@@ -52,12 +62,18 @@ const Form = ({ create, update, editedTask, setToEdit }) => {
     const handleReset = (e) => {
         setForm(initialForm);
         setToEdit(null);
+        setForm(() => {
+            return {
+                ...form,
+                folderId: selectedFolderId
+            }
+        });
     }
 
     return (
         <>
         <div className="centered">
-        <h2 className="centeredTitle spacedUpAndDown title is-5">{id ? `Editing Task ` + oldDescription: "Add Task"}</h2>
+        <h2 className="centeredTitle spacedUpAndDown title is-5">{id ? `Editing ${itemName} ` + oldDescription: `Add ${itemName}`}</h2>
         </div>
             <form onSubmit={handleSubmit}>
                 <input type="text"

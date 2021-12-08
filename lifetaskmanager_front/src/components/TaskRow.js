@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 
-const Row = ({ item, setToEdit, deleteItem, updateItem }) => {
-    const { id, description, finished } = item;
+const TaskRow = ({ item, setToEdit, deleteItem, updateItem}) => {
+    const { id, description, folderId, finished } = item;
     const [isFinished, setIsFinished] = useState(finished);
 
     const handleChange = ({ target }) => {
@@ -15,7 +15,11 @@ const Row = ({ item, setToEdit, deleteItem, updateItem }) => {
 
     return (
         <tr>
-            <td><input type="checkbox" name="finished" onChange={handleChange} checked={isFinished} /></td>
+            <td>
+            {
+                folderId? <input type="checkbox" name="finished" onChange={handleChange} checked={isFinished} /> : <></>
+            }
+            </td>
             <td><div className="preventLongDescription">{description}</div></td>
             <td>
                 <div className="centeredButtons">
@@ -27,4 +31,4 @@ const Row = ({ item, setToEdit, deleteItem, updateItem }) => {
     )
 }
 
-export default Row
+export default TaskRow

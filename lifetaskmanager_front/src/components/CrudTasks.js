@@ -5,20 +5,20 @@ import Form from './Form'
 import '../App.css'
 import Title from "./Title"
 
-const Crud = () => {
-   // const URL = "http://localhost:5000/";
+const CrudTasks = ({selectedFolder}) => {
     const [tasks, setTasks] = useState([]);
     const [toEdit, setToEdit] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const columnNames = ["id", "description", "finished"];
     const [error, setError] = useState(false);
     const URL = "http://localhost:3000/tasks";
-
+    const URLFOLDERS = "http://localhost:3000/folders/";
+    
     useEffect(() => {
         setIsLoading(true);
-        const getTasks = async (url) => {
+        const getTasksFromFolder = async (url) => {
             try {
-                const res = await fetch(url, {
+                const res = await fetch(url + selectedFolder.id + "/tasks", {
                    /* headers: {
                         "authorization": JSON.stringify(token)
                     }*/
@@ -36,13 +36,15 @@ const Crud = () => {
         }
         
         setTimeout(() => {
-            getTasks(URL);
+            getTasksFromFolder(URLFOLDERS);
         }, 600);
     }, [URL])
     
 
     const createTask = (newTask)=>{
         delete newTask.id;
+        delete newTask.userId;
+        console.info(newTask);
         setIsLoading(true);
         try{
             fetch(URL, {
@@ -73,11 +75,9 @@ const Crud = () => {
                 },
                 body: JSON.stringify(taskUpdated)
             }).then((res) => {
-                console.log(res);
                 return res.json();
             })
                 .then((taskEdited) => {
-                    console.log(taskEdited);
                     setTasks((tasks) => {
                         return tasks.map((task) => task.id === taskEdited.id ? taskEdited : task);
                     });
@@ -118,14 +118,16 @@ const Crud = () => {
                     : <Form className="form"
                         create={createTask}
                         update={updateTask}
-                        editedTask={toEdit}
+                        editedItem={toEdit}
                         setToEdit={setToEdit}
+                        itemName="Task"
+                        selectedFolderId={selectedFolder.id}
                     />
             }
             {
                 isLoading || error ? (<div className="centered"><Loader /></div>) :
                     <Table
-                        title="To-Do List"
+                        title={`Folders > ${selectedFolder.description}`}
                         emptyMessage="Hurray! There are no tasks :)"
                         data={tasks}
                         setToEdit={setToEdit}
@@ -138,4 +140,4 @@ const Crud = () => {
     )
 }
 
-export default Crud
+export default CrudTasks
