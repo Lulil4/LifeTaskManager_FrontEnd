@@ -40,13 +40,22 @@ body{
 .centeredButtons{
   display:flex;
   justify-content: center;
+  align-items: stretch;
 }
 
 .leftButton{
-  margin-left:5px;
+  margin-left:-5px;
 }
 
 .rightButton{
+  margin-left:5px;
+}
+
+.leftButtonRow{
+  margin-left:-5px;
+}
+
+.rightButtonRow{
   margin-left:5px;
 }
 
@@ -70,6 +79,19 @@ and (max-width : 500px) {
 
   .fixedWidth{
     width:97vw;
+  }
+
+  .centeredButtons{
+    flex-wrap: wrap;
+  }
+  
+  .rightButtonRow{
+    margin-top:10px;
+    margin-left:0vw;
+  }
+
+  .leftButtonRow{
+    margin-left:0vw;
   }
 }
 

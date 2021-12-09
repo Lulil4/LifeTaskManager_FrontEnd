@@ -6,10 +6,10 @@ const FolderRow = ({ folder, setToEdit, deleteFolder, setSelectedFolder }) => {
     return (
         <tr>
             <td className="preventLongDescription">{description}</td>
-            <td>
-                <div className="centeredButtons">
-                    <button className="leftButton button is-primary" onClick={() => { setSelectedFolder(folder) }}>View Tasks</button>
-                    <button className="rightButton button is-danger" onClick={() => { deleteFolder(folder) }}>Remove </button>
+            <td style={{verticalAlign:"middle"}}>
+                <div className="centeredButtons"> 
+                    <button className="leftButtonRow button is-primary" onClick={() => { setSelectedFolder(folder) }}>View Tasks</button>
+                    <button className="rightButtonRow button is-danger" onClick={() => { deleteFolder(folder) }}>Remove </button>
                 </div>
             </td>
         </tr>

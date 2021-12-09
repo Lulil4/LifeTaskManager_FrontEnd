@@ -46,7 +46,7 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
             setcustomErrorMessage("Please, fill all fields.");
             return;
         }
-        else if(description.length > 99){
+        else if(description.length > 249){
             setcustomErrorMessage("Too long! Maybe you should atomize");
             return;
         }
