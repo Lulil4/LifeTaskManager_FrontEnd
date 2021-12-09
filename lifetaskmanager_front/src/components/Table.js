@@ -6,8 +6,8 @@ const Table = ({title, emptyMessage, data, setToEdit, deleteItem, updateItem, se
     return (
         <>
         <hr className="is-divider"/>
-        <h2 className="centered spacedUpAndDown title is-4">{title}</h2>
-        <table className="table centered">
+        <h2 className="preventLongDescription fixedWidth spacedUpAndDown title is-4 ">{title}</h2>
+        <table className="table centered fixedWidth">
                 <tbody>
                 {
                    data.length ? (data.map(item=> 

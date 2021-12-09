@@ -20,7 +20,7 @@ const TaskRow = ({ item, setToEdit, deleteItem, updateItem}) => {
                 folderId? <input type="checkbox" name="finished" onChange={handleChange} checked={isFinished} /> : <></>
             }
             </td>
-            <td><div className="preventLongDescription">{description}</div></td>
+            <td className="preventLongDescription">{description}</td>
             <td>
                 <div className="centeredButtons">
                     <button className="leftButton button is-warning" onClick={() => { setToEdit(item) }}>Edit</button>

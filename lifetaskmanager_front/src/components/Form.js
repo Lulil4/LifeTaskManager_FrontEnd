@@ -60,14 +60,17 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
     }
 
     const handleReset = (e) => {
-        setForm(initialForm);
+
         setToEdit(null);
+        
         setForm(() => {
             return {
-                ...form,
+                ...initialForm,
                 folderId: selectedFolderId
             }
         });
+
+        console.log(form);
     }
 
     return (

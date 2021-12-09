@@ -65,33 +65,6 @@ const CrudFolders = ({setSelectedFolder}) => {
 
     };
 
-    const updateFolder = (folderUpdated) => {
-        setIsLoading(true);
-        delete folderUpdated.folderId;
-        delete folderUpdated.finished;
-        try{
-            fetch(URL + "/" + folderUpdated.id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    //"authorization": JSON.stringify(token)
-                },
-                body: JSON.stringify(folderUpdated)
-            }).then((res) => {
-                return res.json();
-            })
-                .then((folderEdited) => {
-                    setFolders((folders) => {
-                        return folders.map((folder) => folder.id === folderEdited.id ? folderEdited : folder);
-                    });
-                });
-        }
-        catch(error){
-            setError(true);
-        }
-        setIsLoading(false);
-    };
-
     const deleteFolder = (folderToDelete)=>{
         if(window.confirm(`Are you sure? Tasks inside ${folderToDelete.description} will be deleted too`)){
             setIsLoading(true);
@@ -122,7 +95,6 @@ const CrudFolders = ({setSelectedFolder}) => {
                 error ? <Title title="Sorry! An error ocurred. Try again later." />
                     : <Form className="form"
                         create={createFolder}
-                        update={updateFolder}
                         editedItem={toEdit}
                         setToEdit={setToEdit}
                         itemName={"Folder"}
@@ -136,7 +108,6 @@ const CrudFolders = ({setSelectedFolder}) => {
                         data={folders}
                         setToEdit={setToEdit}
                         deleteItem={deleteFolder}
-                        updateItem={updateFolder}
                         setSelectedFolder={setSelectedFolder}
                         columnNames={columnNames} />
             }
