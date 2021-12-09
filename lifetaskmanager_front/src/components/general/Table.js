@@ -1,6 +1,6 @@
 import React from 'react'
-import FolderRow from './FolderRow'
-import TaskRow from './TaskRow'
+import FolderRow from '../folder/FolderRow'
+import TaskRow from '../task/TaskRow'
 
 const Table = ({title, emptyMessage, data, setToEdit, deleteItem, updateItem, setSelectedFolder}) => {
     return (

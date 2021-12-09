@@ -1,10 +1,10 @@
 import { React, useState } from 'react'
-import CrudFolders from '../components/CrudFolders';
-import CrudTasks from '../components/CrudTasks';
-import Login from '../components/Login';
-import Register from '../components/Register';
-import Loader from '../components/Loader';
-import NavBar from '../components/NavBar';
+import CrudFolders from '../components/folder/CrudFolders';
+import CrudTasks from '../components/task/CrudTasks';
+import Login from '../components/user/Login';
+import Register from '../components/user/Register';
+import Loader from '../components/general/loader/Loader';
+import NavBar from '../components/general/NavBar';
 
 const initialForm = {
   id: null,

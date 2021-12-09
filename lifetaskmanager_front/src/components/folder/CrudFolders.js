@@ -1,10 +1,10 @@
 import { React, useState, useEffect } from 'react'
-import Table from './Table'
-import Loader from './Loader'
-import Form from './Form'
-import '../App.css'
-import Title from "./Title"
-import ModalDeleteConfirm from "./ModalDeleteConfirm"
+import Table from '../general/Table'
+import Loader from '../general/loader/Loader'
+import Form from '../general/Form'
+import '../../App.css'
+import Title from "../general/Title"
+import ModalDeleteConfirm from "../general/ModalDeleteConfirm"
 import jwt_decode from "jwt-decode";
 
 const CrudFolders = ({ setSelectedFolder, userId }) => {

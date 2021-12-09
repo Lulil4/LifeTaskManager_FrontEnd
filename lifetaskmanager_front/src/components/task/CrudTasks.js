@@ -1,9 +1,9 @@
 import {React, useState, useEffect} from 'react'
-import Table from './Table'
-import Loader from './Loader'
-import Form from './Form'
-import '../App.css'
-import Title from "./Title"
+import Table from '../general/Table'
+import Loader from '../general/loader/Loader'
+import Form from '../general/Form'
+import '../../App.css'
+import Title from "../general/Title"
 
 const CrudTasks = ({selectedFolder}) => {
     const [tasks, setTasks] = useState([]);

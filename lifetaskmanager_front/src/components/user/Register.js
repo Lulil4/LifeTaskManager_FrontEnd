@@ -1,5 +1,4 @@
 import { React } from 'react';
-import Title from './Title';
 
 const Register = ({ handleChange, handleSubmit, username, password, customErrorMessage }) => {
 
