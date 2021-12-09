@@ -70,6 +70,10 @@ body{
   width:100vw;
 }
 
+.centeredText{
+  text-align: center;
+}
+
 .fixedWidth{
   width:50vw;
 }

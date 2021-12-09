@@ -112,28 +112,29 @@ const CrudTasks = ({selectedFolder}) => {
     
     return (
         <>
-            {
-                error ? <Title title="Sorry! An error ocurred. Try again later." />
-                    : <Form className="form"
-                        create={createTask}
-                        update={updateTask}
-                        editedItem={toEdit}
-                        setToEdit={setToEdit}
-                        itemName="Task"
-                        selectedFolderId={selectedFolder.id}
-                    />
-            }
-            {
-                isLoading || error ? (<div className="centered"><Loader /></div>) :
-                    <Table
-                        title={`Folders > ${selectedFolder.description}`}
-                        emptyMessage="Hurray! There are no tasks :)"
-                        data={tasks}
-                        setToEdit={setToEdit}
-                        deleteItem={deleteTask}
-                        updateItem={updateTask}
-                        columnNames={columnNames} />
-            }
+        {isLoading? (<div className="centered"><Loader /></div>) :
+         error ? (<Title title="Sorry! An error ocurred. Try again later." />)
+                : (
+                <><Form className="form"
+                    create={createTask}
+                    update={updateTask}
+                    editedItem={toEdit}
+                    setToEdit={setToEdit}
+                    itemName="Task"
+                    selectedFolderId={selectedFolder.id}
+                /> 
+                <Table
+                title={`Folders > ${selectedFolder.description}`}
+                emptyMessage="Hurray! There are no tasks :)"
+                data={tasks}
+                setToEdit={setToEdit}
+                deleteItem={deleteTask}
+                updateItem={updateTask}
+                columnNames={columnNames} />
+                </>)
+        }
+           
+            
 
         </>
     )
