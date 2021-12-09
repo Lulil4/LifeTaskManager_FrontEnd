@@ -18,16 +18,16 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
     const [folderToDelete, setFolderToDelete] = useState(null);
 
     useEffect(() => {
+        const token = window.localStorage.getItem("token");
         setIsLoading(true);
         const getFoldersFromUser = async (url) => {
             try {
                 const res = await fetch(url, {
-                    // headers: {
-                    //     "authorization": JSON.stringify(token)
-                    //}
+                     headers: {
+                         "authorization": JSON.stringify(token)
+                    }
                 });
                 const data = await res.json();
-                console.info(data);
                 data.forEach((folder) => {
                     setFolders((folders) => {
                         return [...folders, folder];
@@ -37,10 +37,8 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
             } catch (error) {
                 setError(true);
             }
-        }
-
-        const token = window.localStorage.getItem("token");
-
+        } 
+        
         if (token){
             var {id} = jwt_decode(token);
             setTimeout(() => {
@@ -52,7 +50,7 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
 
 
     const createFolder = (newFolder) => {
-        console.log(userId);
+        const token = window.localStorage.getItem("token");
         newFolder.userId = userId;
         delete newFolder.id;
 
@@ -62,7 +60,7 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    //  "authorization": JSON.stringify(token)
+                      "authorization": JSON.stringify(token)
                 },
                 body: JSON.stringify(newFolder)
             }).then(res => res.json())
@@ -76,13 +74,14 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
     };
 
     const deleteFolder = (folderToDelete) => {
+        const token = window.localStorage.getItem("token");
         setIsLoading(true);
         try {
             fetch(URL + folderToDelete.id, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                    // "authorization": JSON.stringify(token)
+                     "authorization": JSON.stringify(token)
                 },
             }).then((res) => {
                 if (res.ok) {
@@ -113,7 +112,7 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
             }
             {
                 isLoading ? (<div className="centered"><Loader /></div>) :
-                    error ? <Title title="Sorry! An error ocurred. Try again later." />
+                    error ? <Title title="Sorry! An error has ocurred. Try again later." />
                         : <><Form className="form"
                             create={createFolder}
                             editedItem={toEdit}

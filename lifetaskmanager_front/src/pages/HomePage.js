@@ -56,7 +56,7 @@ const HomePage = () => {
             return;
           }
           const { newToken, id } = retorno;
-          window.localStorage.setItem("token", "Bearer " + newToken);
+          window.localStorage.setItem("token", newToken);
           setUser(id);
           setToken(true);
 

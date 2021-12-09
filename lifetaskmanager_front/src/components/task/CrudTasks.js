@@ -11,17 +11,19 @@ const CrudTasks = ({selectedFolder}) => {
     const [isLoading, setIsLoading] = useState(false);
     const columnNames = ["id", "description", "finished"];
     const [error, setError] = useState(false);
+    const [token, setToken] = useState(window.localStorage.getItem("token"));
     const URL = "http://localhost:3000/tasks";
     const URLFOLDERS = "http://localhost:3000/folders/";
-    
+
     useEffect(() => {
+        setToken(window.localStorage.getItem("token"));
         setIsLoading(true);
         const getTasksFromFolder = async (url) => {
             try {
                 const res = await fetch(url + selectedFolder.id + "/tasks", {
-                   /* headers: {
+                    headers: {
                         "authorization": JSON.stringify(token)
-                    }*/
+                    }
                 });
                 const data = await res.json();
                 data.forEach((task) => {
@@ -50,7 +52,7 @@ const CrudTasks = ({selectedFolder}) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                  //  "authorization": JSON.stringify(token)
+                     "authorization": JSON.stringify(token)
                 },
                 body: JSON.stringify(newTask)
             }).then(res => res.json())
@@ -70,7 +72,7 @@ const CrudTasks = ({selectedFolder}) => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    //"authorization": JSON.stringify(token)
+                    "authorization": JSON.stringify(token)
                 },
                 body: JSON.stringify(taskUpdated)
             }).then((res) => {
@@ -95,7 +97,7 @@ const CrudTasks = ({selectedFolder}) => {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
-                   // "authorization": JSON.stringify(token)
+                    "authorization": JSON.stringify(token)
                 },
             }).then((res) => {
                 if (res.ok) {
@@ -113,7 +115,7 @@ const CrudTasks = ({selectedFolder}) => {
     return (
         <>
         {isLoading? (<div className="centered"><Loader /></div>) :
-         error ? (<Title title="Sorry! An error ocurred. Try again later." />)
+         error ? (<Title title="Sorry! An error has ocurred. Try again later." />)
                 : (
                 <><Form className="form"
                     create={createTask}
