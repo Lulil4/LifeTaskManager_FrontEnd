@@ -65,35 +65,30 @@ body{
   width:50vw;
 }
 
-@media only screen 
-and (min-device-width : 1px) 
-and (max-device-width : 500px) {
+@media  all 
+and (max-width : 500px) {
 
   .fixedWidth{
     width:97vw;
   }
 }
 
-@media only screen 
-and (min-device-width : 501px) 
-and (max-device-width : 1300px) {
+@media all and (min-width : 501px) 
+and (max-width : 1300px) {
 
   .fixedWidth{
     width:80vw;
   }
 }
 
-@media only screen 
-and (min-device-width : 1301px) 
-and (max-device-width : 1700px) {
+@media all and (min-width : 1301px) and (max-width : 1700px) {
 
   .fixedWidth{
     width:75vw;
   }
 }
 
-@media only screen 
-and (min-device-width : 1700px) 
+@media all and (min-device-width : 1700px) 
 and (max-device-width : 1900px) {
 
   .fixedWidth{

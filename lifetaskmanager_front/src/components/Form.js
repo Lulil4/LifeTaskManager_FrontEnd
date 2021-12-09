@@ -12,6 +12,7 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
     const [form, setForm] = useState(initialForm);
     const {id, description, finished, userId, folderId} = form;
     const [oldDescription, setOldDescription] = useState("");
+    const [customErrorMessage, setcustomErrorMessage] = useState(null);
 
     useEffect(() => {
         if (editedItem) {
@@ -26,9 +27,10 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
                 }
             });
         }
-    }, [editedItem])
+    }, [editedItem, selectedFolderId])
 
     const handleChange = ({ target }) => {
+        setcustomErrorMessage(null);
             setForm(() => {
                 return {
                     ...form,
@@ -41,11 +43,11 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
         e.preventDefault();
 
         if (!description) { 
-            alert("Please, fill all fields.");
+            setcustomErrorMessage("Please, fill all fields.");
             return;
         }
         else if(description.length > 99){
-            alert("Too long! Maybe you should atomize");
+            setcustomErrorMessage("Too long! Maybe you should atomize");
             return;
         }
 
@@ -60,7 +62,7 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
     }
 
     const handleReset = (e) => {
-
+        setcustomErrorMessage(null);
         setToEdit(null);
         
         setForm(() => {
@@ -69,8 +71,6 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
                 folderId: selectedFolderId
             }
         });
-
-        console.log(form);
     }
 
     return (
@@ -87,7 +87,11 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
                     onChange={handleChange} 
                     className="input is-warning"
                     />
+                    {
+                        customErrorMessage && <h1 className="centered title is-6">{customErrorMessage}</h1>
+                    }
                 <div className="centeredButtons spacedUpAndDown">
+                
                 {
                     id ? <input type="submit" className="leftButton button is-success" value="Edit" /> 
                     : <input type="submit" className="leftButton button is-success" value="Add" />

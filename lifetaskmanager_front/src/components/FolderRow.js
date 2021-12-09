@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, } from 'react'
 
 const FolderRow = ({ folder, setToEdit, deleteFolder, setSelectedFolder }) => {
     const { id, description, userId } = folder;

@@ -38,13 +38,12 @@ const CrudTasks = ({selectedFolder}) => {
         setTimeout(() => {
             getTasksFromFolder(URLFOLDERS);
         }, 600);
-    }, [URL])
+    }, [URL, selectedFolder.id])
     
 
     const createTask = (newTask)=>{
         delete newTask.id;
         delete newTask.userId;
-        console.info(newTask);
         setIsLoading(true);
         try{
             fetch(URL, {

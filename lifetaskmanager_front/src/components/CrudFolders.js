@@ -13,7 +13,7 @@ const CrudFolders = ({setSelectedFolder}) => {
     const columnNames = ["id", "description", "userId"];
     const [error, setError] = useState(false);
     const URL = "http://localhost:3000/folders";
-    
+
     useEffect(() => {
         setIsLoading(true);
         const getFolders = async (url) => {
@@ -66,6 +66,7 @@ const CrudFolders = ({setSelectedFolder}) => {
     };
 
     const deleteFolder = (folderToDelete)=>{
+        
         if(window.confirm(`Are you sure? Tasks inside ${folderToDelete.description} will be deleted too`)){
             setIsLoading(true);
             try {
