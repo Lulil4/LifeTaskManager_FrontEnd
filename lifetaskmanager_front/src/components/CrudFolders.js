@@ -5,20 +5,21 @@ import Form from './Form'
 import '../App.css'
 import Title from "./Title"
 import ModalDeleteConfirm from "./ModalDeleteConfirm"
+import jwt_decode from "jwt-decode";
 
-const CrudFolders = ({ setSelectedFolder }) => {
+const CrudFolders = ({ setSelectedFolder, userId }) => {
     // const URL = "http://localhost:5000/";
     const [folders, setFolders] = useState([]);
     const [toEdit, setToEdit] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const columnNames = ["id", "description", "userId"];
     const [error, setError] = useState(false);
-    const URL = "http://localhost:3000/folders";
+    const URL = "http://localhost:3000/folders/";
     const [folderToDelete, setFolderToDelete] = useState(null);
 
     useEffect(() => {
         setIsLoading(true);
-        const getFolders = async (url) => {
+        const getFoldersFromUser = async (url) => {
             try {
                 const res = await fetch(url, {
                     // headers: {
@@ -26,6 +27,7 @@ const CrudFolders = ({ setSelectedFolder }) => {
                     //}
                 });
                 const data = await res.json();
+                console.info(data);
                 data.forEach((folder) => {
                     setFolders((folders) => {
                         return [...folders, folder];
@@ -37,15 +39,21 @@ const CrudFolders = ({ setSelectedFolder }) => {
             }
         }
 
-        setTimeout(() => {
-            getFolders(URL);
-            setIsLoading(false);
-        }, 600);
+        const token = window.localStorage.getItem("token");
+
+        if (token){
+            var {id} = jwt_decode(token);
+            setTimeout(() => {
+                getFoldersFromUser(URL + id + "/user");
+                setIsLoading(false);
+            }, 600);
+        }      
     }, [URL])
 
 
     const createFolder = (newFolder) => {
-        newFolder.userId = 1;//FOR TESTING!!! CHANGE WHEN LOGIN IS ADDED
+        console.log(userId);
+        newFolder.userId = userId;
         delete newFolder.id;
 
         setIsLoading(true);
@@ -70,7 +78,7 @@ const CrudFolders = ({ setSelectedFolder }) => {
     const deleteFolder = (folderToDelete) => {
         setIsLoading(true);
         try {
-            fetch(URL + "/" + folderToDelete.id, {
+            fetch(URL + folderToDelete.id, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

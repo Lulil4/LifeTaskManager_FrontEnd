@@ -78,6 +78,24 @@ body{
   width:50vw;
 }
 
+.navBar{
+  margin-top:5px;
+  height:7vh;
+  width:100%;
+}
+
+.navbarMessage{
+  height:100%; 
+  float:left;
+  margin-top:1vh;
+  margin-left: 10px;
+}
+
+.divToRight{
+  float:right;
+  margin-right: 10px;
+}
+
 @media  all 
 and (max-width : 500px) {
 

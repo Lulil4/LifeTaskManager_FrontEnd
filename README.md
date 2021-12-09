@@ -8,4 +8,5 @@
 <p>• Bulma 0.9.3</p>
 <p>• React Router Dom 5.3.0</p>
 <p>• NPM 8.2.0</p>
+<p>• JWT 8.0.0</p>
 <hr>
