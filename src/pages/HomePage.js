@@ -82,6 +82,12 @@ const HomePage = () => {
       setcustomErrorMessage("Please, choose a longer password.");
       return;
     }
+    else if(username.length>50){
+      setcustomErrorMessage("Please, choose a shorter username.");
+    }
+    else if(password.length>50){
+      setcustomErrorMessage("Please, choose a shorter password.");
+    }
 
     setIsLoading(true);
 
