@@ -5,6 +5,7 @@ import Login from '../components/user/Login';
 import Register from '../components/user/Register';
 import Loader from '../components/general/loader/Loader';
 import NavBar from '../components/general/NavBar';
+import jwt_decode from "jwt-decode";
 
 const initialForm = {
   id: null,
@@ -19,8 +20,8 @@ const HomePage = () => {
   const [form, setForm] = useState(initialForm);
   const { username, password } = form;
   const [isLoading, setIsLoading] = useState(false);
-  const URL_LOGIN = "http://localhost:3000/users/login";
-  const URL_REGISTER = "http://localhost:3000/users";
+  const URL_LOGIN = "http://back-lifetaskmanager.herokuapp.com/users/login";
+  const URL_REGISTER = "http://back-lifetaskmanager.herokuapp.com/users";
   const [user, setUser] = useState(null);
   const [customErrorMessage, setcustomErrorMessage] = useState(null);
 
@@ -55,8 +56,9 @@ const HomePage = () => {
             setcustomErrorMessage("Wrong username or password");
             return;
           }
-          const { newToken, id } = retorno;
+          const { newToken } = retorno;
           window.localStorage.setItem("token", newToken);
+          var {id} = jwt_decode(newToken);
           setUser(id);
           setToken(true);
 
@@ -91,7 +93,6 @@ const HomePage = () => {
         },
         body: JSON.stringify(form)
       }).then((res) => {
-        console.log(res);
         if (res.status == 500) {
           setcustomErrorMessage("Username taken. Please, choose another.");
           throw Error("Username taken");

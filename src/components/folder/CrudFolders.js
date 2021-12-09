@@ -14,7 +14,7 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const columnNames = ["id", "description", "userId"];
     const [error, setError] = useState(false);
-    const URL = "http://localhost:3000/folders/";
+    const URL = "http://back-lifetaskmanager.herokuapp.com/folders/";
     const [folderToDelete, setFolderToDelete] = useState(null);
 
     useEffect(() => {
@@ -51,7 +51,8 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
 
     const createFolder = (newFolder) => {
         const token = window.localStorage.getItem("token");
-        newFolder.userId = userId;
+        var {id} = jwt_decode(token);
+        newFolder.userId = id;
         delete newFolder.id;
 
         setIsLoading(true);
