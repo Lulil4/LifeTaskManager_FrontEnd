@@ -20,8 +20,8 @@ const HomePage = () => {
   const [form, setForm] = useState(initialForm);
   const { username, password } = form;
   const [isLoading, setIsLoading] = useState(false);
-  const URL_LOGIN = "http://back-lifetaskmanager.herokuapp.com/users/login";
-  const URL_REGISTER = "http://back-lifetaskmanager.herokuapp.com/users";
+  const URL_LOGIN = "https://back-lifetaskmanager.herokuapp.com/users/login";
+  const URL_REGISTER = "https://back-lifetaskmanager.herokuapp.com/users";
   const [user, setUser] = useState(null);
   const [customErrorMessage, setcustomErrorMessage] = useState(null);
 
@@ -32,6 +32,7 @@ const HomePage = () => {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
+    console.log(username + " " + password);
     if (!(username && password)) {
       setcustomErrorMessage("Please, fill all fields");
       return;
@@ -68,6 +69,7 @@ const HomePage = () => {
         })
         .finally(() => {
           setIsLoading(false);
+          setForm(initialForm);
         });
     }, 500);
   }
@@ -116,6 +118,7 @@ const HomePage = () => {
         })
         .finally(() => {
           setIsLoading(false);
+          setForm(initialForm);
         });
     }, 500);
   }
