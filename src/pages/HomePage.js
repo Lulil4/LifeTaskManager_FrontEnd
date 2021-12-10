@@ -32,7 +32,6 @@ const HomePage = () => {
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    console.log(username + " " + password);
     if (!(username && password)) {
       setcustomErrorMessage("Please, fill all fields");
       return;

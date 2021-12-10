@@ -12,8 +12,8 @@ const CrudTasks = ({selectedFolder}) => {
     const columnNames = ["id", "description", "finished"];
     const [error, setError] = useState(false);
     const [token, setToken] = useState(window.localStorage.getItem("token"));
-    const URL = "http://localhost:3000/tasks";
-    const URLFOLDERS = "http://localhost:3000/folders/";
+    const URL = "https://back-lifetaskmanager.herokuapp.com/tasks";
+    const URLFOLDERS = "https://back-lifetaskmanager.herokuapp.com/folders/";
 
     useEffect(() => {
         setToken(window.localStorage.getItem("token"));

@@ -8,13 +8,12 @@ import ModalDeleteConfirm from "../general/ModalDeleteConfirm"
 import jwt_decode from "jwt-decode";
 
 const CrudFolders = ({ setSelectedFolder, userId }) => {
-    // const URL = "http://localhost:5000/";
     const [folders, setFolders] = useState([]);
     const [toEdit, setToEdit] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const columnNames = ["id", "description", "userId"];
     const [error, setError] = useState(false);
-    const URL = "http://back-lifetaskmanager.herokuapp.com/folders/";
+    const URL = "https://back-lifetaskmanager.herokuapp.com/folders/";
     const [folderToDelete, setFolderToDelete] = useState(null);
 
     useEffect(() => {
