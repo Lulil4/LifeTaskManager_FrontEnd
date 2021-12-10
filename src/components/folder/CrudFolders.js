@@ -32,7 +32,6 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
                         return [...folders, folder];
                     });
                 });
-                setIsLoading(false);
             } catch (error) {
                 setError(true);
             }
@@ -40,8 +39,8 @@ const CrudFolders = ({ setSelectedFolder, userId }) => {
         
         if (token){
             var {id} = jwt_decode(token);
+            getFoldersFromUser(URL + id + "/user");
             setTimeout(() => {
-                getFoldersFromUser(URL + id + "/user");
                 setIsLoading(false);
             }, 600);
         }      

@@ -142,13 +142,8 @@ const HomePage = () => {
         {
           token ?
             selectedFolder ?
-              <>
-                <CrudTasks selectedFolder={selectedFolder} />
-                <div className="centered">
-                  <button className="button is-primary" onClick={() => { setSelectedFolder(null) }}>Back to folders</button>
-                </div></>
+                <CrudTasks selectedFolder={selectedFolder} setSelectedFolder={setSelectedFolder}/>
               : <CrudFolders setSelectedFolder={setSelectedFolder} userId={user} />
-
             : toRegister ? isLoading ? <Loader /> : <>
               <Register handleChange={handleFormChange} handleSubmit={handleRegister} customErrorMessage={customErrorMessage} />
               <div className="centered" style={{ marginTop: "5px" }}>

@@ -1,11 +1,11 @@
-import {React, useState, useEffect} from 'react'
+import { React, useState, useEffect } from 'react'
 import Table from '../general/Table'
 import Loader from '../general/loader/Loader'
 import Form from '../general/Form'
 import '../../App.css'
 import Title from "../general/Title"
 
-const CrudTasks = ({selectedFolder}) => {
+const CrudTasks = ({ selectedFolder, setSelectedFolder }) => {
     const [tasks, setTasks] = useState([]);
     const [toEdit, setToEdit] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -31,34 +31,35 @@ const CrudTasks = ({selectedFolder}) => {
                         return [...tasks, task];
                     });
                 });
-                setIsLoading(false);
             } catch (error) {
-               setError(true);
+                setError(true);
             }
         }
-        
+
+        getTasksFromFolder(URLFOLDERS);
+
         setTimeout(() => {
-            getTasksFromFolder(URLFOLDERS);
+            setIsLoading(false);
         }, 600);
     }, [URL, selectedFolder.id, token])
-    
 
-    const createTask = (newTask)=>{
+
+    const createTask = (newTask) => {
         delete newTask.id;
         delete newTask.userId;
         setIsLoading(true);
-        try{
+        try {
             fetch(URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                     "authorization": JSON.stringify(token)
+                    "authorization": JSON.stringify(token)
                 },
                 body: JSON.stringify(newTask)
             }).then(res => res.json())
-            .then(newTask => setTasks([...tasks, newTask]));
+                .then(newTask => setTasks([...tasks, newTask]));
         }
-        catch(error){
+        catch (error) {
             setError(true);
         }
         setIsLoading(false);
@@ -67,7 +68,7 @@ const CrudTasks = ({selectedFolder}) => {
 
     const updateTask = (taskUpdated) => {
         setIsLoading(true);
-        try{
+        try {
             fetch(URL + "/" + taskUpdated.id, {
                 method: "PUT",
                 headers: {
@@ -84,13 +85,13 @@ const CrudTasks = ({selectedFolder}) => {
                     });
                 });
         }
-        catch(error){
+        catch (error) {
             setError(true);
         }
         setIsLoading(false);
     };
 
-    const deleteTask = (id)=>{
+    const deleteTask = (id) => {
         setIsLoading(true);
         try {
             fetch(URL + "/" + id, {
@@ -111,32 +112,36 @@ const CrudTasks = ({selectedFolder}) => {
         }
         setIsLoading(false);
     };
-    
+
     return (
         <>
-        {isLoading? (<div className="centered"><Loader /></div>) :
-         error ? (<Title title="Sorry! An error has ocurred. Try again later." />)
-                : (
-                <><Form className="form"
-                    create={createTask}
-                    update={updateTask}
-                    editedItem={toEdit}
-                    setToEdit={setToEdit}
-                    itemName="Task"
-                    selectedFolderId={selectedFolder.id}
-                /> 
-                <Table
-                title={`Folders > ${selectedFolder.description}`}
-                emptyMessage="Hurray! There are no tasks :)"
-                data={tasks}
-                setToEdit={setToEdit}
-                deleteItem={deleteTask}
-                updateItem={updateTask}
-                columnNames={columnNames} />
-                </>)
-        }
-           
-            
+            {isLoading ? (<div className="centered"><Loader /></div>) :
+                error ? (<Title title="Sorry! An error has ocurred. Try again later." />)
+                    : (
+                        <><Form className="form"
+                            create={createTask}
+                            update={updateTask}
+                            editedItem={toEdit}
+                            setToEdit={setToEdit}
+                            itemName="Task"
+                            selectedFolderId={selectedFolder.id}
+                        />
+                            <Table
+                                title={`Folders > ${selectedFolder.description}`}
+                                emptyMessage="Hurray! There are no tasks :)"
+                                data={tasks}
+                                setToEdit={setToEdit}
+                                deleteItem={deleteTask}
+                                updateItem={updateTask}
+                                columnNames={columnNames} />
+
+                            <div className="centered">
+                                <button className="button is-primary" onClick={() => { setSelectedFolder(null) }}>Back to folders</button>
+                            </div>
+                        </>)
+            }
+
+
 
         </>
     )
