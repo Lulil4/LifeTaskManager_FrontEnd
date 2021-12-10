@@ -40,7 +40,7 @@ const CrudTasks = ({selectedFolder}) => {
         setTimeout(() => {
             getTasksFromFolder(URLFOLDERS);
         }, 600);
-    }, [URL, selectedFolder.id])
+    }, [URL, selectedFolder.id, token])
     
 
     const createTask = (newTask)=>{

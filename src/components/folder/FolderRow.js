@@ -1,6 +1,7 @@
 import { React, } from 'react'
 
-const FolderRow = ({ folder, setToEdit, deleteFolder, setSelectedFolder }) => {
+const FolderRow = ({ folder, deleteFolder, setSelectedFolder }) => {
+     // eslint-disable-next-line no-unused-vars
     const { id, description, userId } = folder;
 
     return (

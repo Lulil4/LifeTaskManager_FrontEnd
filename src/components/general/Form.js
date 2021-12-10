@@ -10,6 +10,7 @@ const initialForm = {
 
 const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderId}) => {
     const [form, setForm] = useState(initialForm);
+     // eslint-disable-next-line no-unused-vars
     const {id, description, finished, userId, folderId} = form;
     const [oldDescription, setOldDescription] = useState("");
     const [customErrorMessage, setcustomErrorMessage] = useState(null);
@@ -27,6 +28,7 @@ const Form = ({ create, update, editedItem, setToEdit, itemName, selectedFolderI
                 }
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editedItem, selectedFolderId])
 
     const handleChange = ({ target }) => {

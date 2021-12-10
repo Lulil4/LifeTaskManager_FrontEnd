@@ -100,7 +100,7 @@ const HomePage = () => {
         },
         body: JSON.stringify(form)
       }).then((res) => {
-        if (res.status == 500) {
+        if (res.status === 500) {
           setcustomErrorMessage("Username taken. Please, choose another.");
           throw Error("Username taken");
         }
@@ -137,7 +137,7 @@ const HomePage = () => {
 
   return (
     <>
-      <NavBar message="Life Task Manager" handleLogout={logout}></NavBar>
+      <NavBar message="Life Task Manager" handleLogout={logout} initialToken={token}></NavBar>
       <div className="App">
         {
           token ?

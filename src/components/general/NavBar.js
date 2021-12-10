@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-const NavBar = ({ message, handleLogout }) => {
+const NavBar = ({ message, handleLogout, initialToken }) => {
     const [token, setToken] = useState(null);
     useEffect(() => {
-        setToken(window.localStorage.getItem("token"))
-    }, []);
+        if(initialToken){
+            setToken(window.localStorage.getItem("token"));
+        }
+    }, [initialToken]);
 
     return (
         <div className="navBar">
